@@ -20,14 +20,15 @@ public class UsersEntity {
     private int userStatus;
     private Date birthday;
     private String wechatOpenid;
-    private Byte wechatSex;
     private String wechatNickname;
     private String wechatCity;
     private String wechatProvince;
     private String wechatHeadimgurl;
+    private String sex;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() {
         return id;
     }
@@ -107,15 +108,6 @@ public class UsersEntity {
         this.wechatOpenid = wechatOpenid;
     }
 
-    @Basic
-    @Column(name = "wechat_sex")
-    public Byte getWechatSex() {
-        return wechatSex;
-    }
-
-    public void setWechatSex(Byte wechatSex) {
-        this.wechatSex = wechatSex;
-    }
 
     @Basic
     @Column(name = "wechat_nickname")
@@ -172,7 +164,6 @@ public class UsersEntity {
         if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
         if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
         if (wechatOpenid != null ? !wechatOpenid.equals(that.wechatOpenid) : that.wechatOpenid != null) return false;
-        if (wechatSex != null ? !wechatSex.equals(that.wechatSex) : that.wechatSex != null) return false;
         if (wechatNickname != null ? !wechatNickname.equals(that.wechatNickname) : that.wechatNickname != null)
             return false;
         if (wechatCity != null ? !wechatCity.equals(that.wechatCity) : that.wechatCity != null) return false;
@@ -194,11 +185,39 @@ public class UsersEntity {
         result = 31 * result + userStatus;
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         result = 31 * result + (wechatOpenid != null ? wechatOpenid.hashCode() : 0);
-        result = 31 * result + (wechatSex != null ? wechatSex.hashCode() : 0);
         result = 31 * result + (wechatNickname != null ? wechatNickname.hashCode() : 0);
         result = 31 * result + (wechatCity != null ? wechatCity.hashCode() : 0);
         result = 31 * result + (wechatProvince != null ? wechatProvince.hashCode() : 0);
         result = 31 * result + (wechatHeadimgurl != null ? wechatHeadimgurl.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "UsersEntity{" +
+                "id=" + id +
+                ", userPhone='" + userPhone + '\'' +
+                ", userPass='" + userPass + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", createTime=" + createTime +
+                ", userStatus=" + userStatus +
+                ", birthday=" + birthday +
+                ", wechatOpenid='" + wechatOpenid + '\'' +
+                ", wechatNickname='" + wechatNickname + '\'' +
+                ", wechatCity='" + wechatCity + '\'' +
+                ", wechatProvince='" + wechatProvince + '\'' +
+                ", wechatHeadimgurl='" + wechatHeadimgurl + '\'' +
+                ", sex='" + sex + '\'' +
+                '}';
+    }
+
+    @Basic
+    @Column(name = "sex")
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 }

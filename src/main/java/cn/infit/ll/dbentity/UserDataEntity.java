@@ -7,13 +7,13 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by kaxia on 2017/6/14.
+ * Created by kaxia on 2017/6/15.
  */
 @Entity
 @Table(name = "user_data", schema = "IN_Fit", catalog = "")
 public class UserDataEntity {
-    private int id;
-    private int userId;
+    private long id;
+    private long userId;
     private Timestamp createDate;
     private BigDecimal weight;
     private BigDecimal height;
@@ -40,7 +40,7 @@ public class UserDataEntity {
     private BigDecimal onTheChest;
     private BigDecimal theChest;
     private BigDecimal underTheChest;
-    private int onTheWaistWaistInTheNet;
+    private BigDecimal onTheWaistWaistInTheNet;
     private BigDecimal inTheWaist;
     private BigDecimal waistbandIsSurrounded;
     private BigDecimal hipCircumference;
@@ -63,21 +63,22 @@ public class UserDataEntity {
 
     @Id
     @Column(name = "ID")
-    public int getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     @Basic
     @Column(name = "user_id")
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -344,11 +345,11 @@ public class UserDataEntity {
 
     @Basic
     @Column(name = "on_the_waist_waist_in_the_net")
-    public int getOnTheWaistWaistInTheNet() {
+    public BigDecimal getOnTheWaistWaistInTheNet() {
         return onTheWaistWaistInTheNet;
     }
 
-    public void setOnTheWaistWaistInTheNet(int onTheWaistWaistInTheNet) {
+    public void setOnTheWaistWaistInTheNet(BigDecimal onTheWaistWaistInTheNet) {
         this.onTheWaistWaistInTheNet = onTheWaistWaistInTheNet;
     }
 
@@ -626,8 +627,8 @@ public class UserDataEntity {
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + userId;
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (int) (userId ^ (userId >>> 32));
         result = 31 * result + (createDate != null ? createDate.hashCode() : 0);
         result = 31 * result + (weight != null ? weight.hashCode() : 0);
         result = 31 * result + (height != null ? height.hashCode() : 0);
@@ -654,7 +655,7 @@ public class UserDataEntity {
         result = 31 * result + (onTheChest != null ? onTheChest.hashCode() : 0);
         result = 31 * result + (theChest != null ? theChest.hashCode() : 0);
         result = 31 * result + (underTheChest != null ? underTheChest.hashCode() : 0);
-        result = 31 * result + onTheWaistWaistInTheNet;
+        result = 31 * result + (onTheWaistWaistInTheNet != null ? onTheWaistWaistInTheNet.hashCode() : 0);
         result = 31 * result + (inTheWaist != null ? inTheWaist.hashCode() : 0);
         result = 31 * result + (waistbandIsSurrounded != null ? waistbandIsSurrounded.hashCode() : 0);
         result = 31 * result + (hipCircumference != null ? hipCircumference.hashCode() : 0);
@@ -675,5 +676,59 @@ public class UserDataEntity {
         result = 31 * result + (length != null ? length.hashCode() : 0);
         result = 31 * result + (straightCrotch != null ? straightCrotch.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDataEntity{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", createDate=" + createDate +
+                ", weight=" + weight +
+                ", height=" + height +
+                ", highWaist=" + highWaist +
+                ", ankleHigh=" + ankleHigh +
+                ", kneeHigh=" + kneeHigh +
+                ", doesHigh=" + doesHigh +
+                ", hipHigh=" + hipHigh +
+                ", feetLong=" + feetLong +
+                ", backLength=" + backLength +
+                ", frontWaistLength=" + frontWaistLength +
+                ", chestLong=" + chestLong +
+                ", chestWidth=" + chestWidth +
+                ", backWidth=" + backWidth +
+                ", shoulderLength=" + shoulderLength +
+                ", hipWaistLong=" + hipWaistLong +
+                ", theThighInsideLong=" + theThighInsideLong +
+                ", armLength=" + armLength +
+                ", upperArmLength=" + upperArmLength +
+                ", lengthOfTheTrunk=" + lengthOfTheTrunk +
+                ", forkLength=" + forkLength +
+                ", headCircumference=" + headCircumference +
+                ", neckCircumference=" + neckCircumference +
+                ", onTheChest=" + onTheChest +
+                ", theChest=" + theChest +
+                ", underTheChest=" + underTheChest +
+                ", onTheWaistWaistInTheNet=" + onTheWaistWaistInTheNet +
+                ", inTheWaist=" + inTheWaist +
+                ", waistbandIsSurrounded=" + waistbandIsSurrounded +
+                ", hipCircumference=" + hipCircumference +
+                ", thighCircumference=" + thighCircumference +
+                ", inTheThighCircumference=" + inTheThighCircumference +
+                ", kneeCircumference=" + kneeCircumference +
+                ", ankleCircumference=" + ankleCircumference +
+                ", heelsCircumference=" + heelsCircumference +
+                ", armRhizosphere=" + armRhizosphere +
+                ", upperArmCircumference=" + upperArmCircumference +
+                ", elbowCircumference=" + elbowCircumference +
+                ", wristCircumference=" + wristCircumference +
+                ", hemCircumference=" + hemCircumference +
+                ", footMouth=" + footMouth +
+                ", beforeTheLength=" + beforeTheLength +
+                ", afterTheLength=" + afterTheLength +
+                ", sleeveLength=" + sleeveLength +
+                ", length=" + length +
+                ", straightCrotch=" + straightCrotch +
+                '}';
     }
 }

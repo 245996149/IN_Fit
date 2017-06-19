@@ -86,7 +86,8 @@ public class PostTest {
                 "&hem_circumference=0&foot_mouth=23.3494&before_the_length=73.7315&after_the_length=71.7315&sleeve_length=57.7761&length=98.5232&straight_crotch=22.0667";
 
         //发送 POST 请求
-        String sr=sendPost("http://localhost:8080/IN_Fit/receive/receiveData.do", param);
+        String sr=sendPost("http://localhost/IN_Fit/receive/receiveData.do", param);
+
         System.out.println(sr);
 
     }

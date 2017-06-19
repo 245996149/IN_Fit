@@ -9,4 +9,7 @@ public interface UserDao {
 
     UsersEntity findByUser_phone(String user_phone);
 
+    UsersEntity findByOpen_id(String open_id);
+
+
 }

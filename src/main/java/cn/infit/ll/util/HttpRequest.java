@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.inphoto.util;
+package cn.infit.ll.util;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

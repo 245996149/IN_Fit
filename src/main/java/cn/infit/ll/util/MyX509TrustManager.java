@@ -1,4 +1,4 @@
-package cn.inphoto.util;
+package cn.infit.ll.util;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;

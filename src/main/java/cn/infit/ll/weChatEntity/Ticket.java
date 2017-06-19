@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.infit.ll.entity;
+package cn.infit.ll.weChatEntity;
 
 /**
  * @author Ming.C

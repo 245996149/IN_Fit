@@ -1,4 +1,4 @@
-package cn.inphoto.user.interceptor;
+package cn.infit.ll.interceptor;
 
 
 import org.apache.log4j.Logger;
@@ -13,8 +13,6 @@ import java.io.IOException;
  */
 public class ResFilter implements Filter {
 
-    private Logger logger = Logger.getLogger(ResFilter.class);
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         System.out.println("过滤器开始初始化了");
@@ -24,9 +22,6 @@ public class ResFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         // 设置日志默认
         MDC.put("user_id", 0);
-        MDC.put("category_id", 0);
-
-
 
         try {
             filterChain.doFilter(servletRequest, servletResponse);

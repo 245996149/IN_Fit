@@ -29,4 +29,19 @@ public class UserDaoImpl extends SuperDao implements UserDao {
 
     }
 
+    @Override
+    public UsersEntity findByOpen_id(String open_id) {
+
+        try (Session session = sessionFactory.openSession()) {
+
+            Query query = session.createQuery("from UsersEntity where wechatOpenid = ?");
+
+            query.setParameter(0, open_id);
+
+            return (UsersEntity) query.uniqueResult();
+
+        }
+
+    }
+
 }

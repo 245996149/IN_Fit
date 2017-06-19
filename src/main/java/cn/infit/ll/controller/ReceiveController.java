@@ -4,6 +4,8 @@ import cn.infit.ll.dao.UserDao;
 import cn.infit.ll.dao.UtilDao;
 import cn.infit.ll.dbentity.UserDataEntity;
 import cn.infit.ll.dbentity.UsersEntity;
+import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,12 +18,16 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import static cn.infit.ll.util.DirUtil.getErrorInfoFromException;
+
 /**
  * Created by kaxia on 2017/6/14.
  */
 @Controller
 @RequestMapping("/receive")
 public class ReceiveController {
+
+    private  Logger logger = Logger.getLogger(ReceiveController.class);
 
     @Resource
     UserDao userDao;
@@ -66,11 +72,25 @@ public class ReceiveController {
                 } else {
                     user.setSex("2");
                 }
-                utilDao.save(user);
+
+                if (!utilDao.save(user)) {
+
+// 为空直接返回
+                    result.put("success", false);
+                    result.put("code", 199);
+                    result.put("message", "数据写入数据库是发生错误");
+                    logger.info(result);
+                    return result;
+
+                }
 
             }
 
+            MDC.put("user_id", user.getId());
+
             UserDataEntity userData = new UserDataEntity();
+
+            logger.info("用户：" + user.toString() + "请求写入数据");
 
             userData.setUserId(user.getId());
             userData.setWeight(new BigDecimal(request.getParameter("weight")));
@@ -119,14 +139,20 @@ public class ReceiveController {
             userData.setLength(new BigDecimal(request.getParameter("length")));
             userData.setStraightCrotch(new BigDecimal(request.getParameter("straight_crotch")));
 
-            System.out.println(utilDao.save(userData));
+            if (!utilDao.save(userData)) {
 
-            System.out.println(userData.toString());
+                result.put("success", false);
+                result.put("code", 199);
+                result.put("message", "数据写入数据库时发生错误");
+                logger.info(result);
+                return result;
+
+            }
 
             result.put("success", true);
             result.put("code", 200);
-            result.put("message", "接受成功");
-
+            result.put("message", "数据写入数据库成功，数据信息：" + userData.toString());
+            logger.info(result);
             return result;
 
         } catch (NullPointerException e) {
@@ -135,9 +161,18 @@ public class ReceiveController {
             e.printStackTrace();
             result.put("success", false);
             result.put("code", 100);
-            result.put("message", "有参数为空");
+            result.put("message", "有参数为空，错误信息为:" + getErrorInfoFromException(e));
+            logger.info(result);
             return result;
 
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            result.put("success", false);
+            result.put("code", 101);
+            result.put("message", "发生未知错误:" + getErrorInfoFromException(e));
+            logger.info(result);
+            return result;
         }
 
     }

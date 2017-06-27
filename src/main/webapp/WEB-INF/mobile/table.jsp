@@ -27,6 +27,71 @@
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script language="javascript" type="text/javascript"
+            src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script language="javascript" type="text/javascript"
+            src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+    <script type="text/javascript">
+
+        //网页加载后执行函数
+        window.onload = function () {
+
+            //判断是否为微信内核
+            if (isWeixin()) {
+                //是微信打开
+
+                var url = location.href;
+                $.post(
+                    "getWeChatInfo.do",
+                    {
+                        "url": url
+                    },
+                    function (res) {
+
+                        wx.config({
+                            debug: false,
+                            appId: res.appid,
+                            timestamp: res.timestamp,
+                            nonceStr: res.nonceStr,
+                            signature: res.signature,
+                            jsApiList: ['checkJsApi', 'onMenuShareTimeline',
+                                'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo',
+                                'hideMenuItems', 'showMenuItems', 'hideAllNonBaseMenuItem',
+                                'showAllNonBaseMenuItem', 'translateVoice', 'startRecord',
+                                'stopRecord', 'onRecordEnd', 'playVoice', 'pauseVoice',
+                                'stopVoice', 'uploadVoice', 'downloadVoice', 'chooseImage',
+                                'previewImage', 'uploadImage', 'downloadImage',
+                                'getNetworkType', 'openLocation', 'getLocation',
+                                'hideOptionMenu', 'showOptionMenu', 'closeWindow',
+                                'scanQRCode', 'chooseWXPay', 'openProductSpecificView',
+                                'addCard', 'chooseCard', 'openCard']
+                        });
+
+                        wx.ready(function () {
+
+                            wx.hideAllNonBaseMenuItem();
+
+                        });
+                    })
+
+            }
+
+        }
+
+        //这个函数用来判断当前浏览器是否微信内置浏览器，是微信返回true，不是微信返回false
+        function isWeixin() {
+            var WxObj = window.navigator.userAgent.toLowerCase();
+            if (WxObj.match(/microMessenger/i) == 'micromessenger') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    </script>
+
 </head>
 <body>
 <div class="row">
